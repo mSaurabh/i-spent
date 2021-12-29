@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AUTHDISPATCH } from "../context/DataInterfaces";
 import { projectAuth } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
@@ -9,14 +9,16 @@ const useSignup = () => {
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const { dispatch } = useAuthContext();
+  const [isCancelled, setIsCancelled] = useState(false);
 
   const signup = async (
     email: string,
     password: string,
     displayName: string
   ) => {
-    setError("");
     setIsPending(true);
+    setError("");
+
     try {
       if (email && password && displayName) {
         // signup user
@@ -36,17 +38,27 @@ const useSignup = () => {
         // dispatch login action
         dispatch({ type: AUTHDISPATCH.LOGIN, payload: res.user });
 
-        setError("");
-        setIsPending(false);
+        if (!isCancelled) {
+          setIsPending(false);
+          setError("");
+        }
       } else {
         throw new Error("Missing user info. Please check your entry");
       }
     } catch (err: any) {
-      // catch error
-      setError(err.message);
-      setIsPending(false);
+      if (!isCancelled) {
+        console.log(err.message);
+        setError(err.message);
+        setIsPending(false);
+      }
     }
   };
+
+  //NOTE Cleanup function to avoid memory leaks or state update when component is unmounted
+  useEffect(() => {
+    return () => setIsCancelled(true);
+  }, []);
+
   return { error, isPending, signup };
 };
 

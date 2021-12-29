@@ -2,21 +2,26 @@ import { useEffect, useState } from "react";
 import { projectAuth } from "../firebase/config";
 import { useAuthContext } from "./useAuthContext";
 
-export const useLogout = () => {
+export const useLogin = () => {
   const [error, setError] = useState("");
   const [isPending, setIsPending] = useState(false);
   const [isCancelled, setIsCancelled] = useState(false);
   const { dispatch } = useAuthContext();
 
-  const logout = async () => {
+  const login = async (email: string, password: string, captcha: string) => {
     setError("");
     setIsPending(true);
 
-    // sign the user out
+    // sign the user in
     try {
-      await projectAuth.signOut();
-      // dispatch logout action
-      dispatch({ type: "LOGOUT" });
+      if (!captcha) {
+        throw Error("Please Check the Captcha");
+      }
+      const res = await projectAuth.signInWithEmailAndPassword(email, password);
+
+      // dispatch login action
+      dispatch({ type: "LOGIN", payload: res.user });
+
       // update state
       if (!isCancelled) {
         setIsPending(false);
@@ -32,8 +37,11 @@ export const useLogout = () => {
   };
 
   useEffect(() => {
-    return () => setIsCancelled(true);
+    return () => {
+      console.log("Cleanup useLogin");
+      setIsCancelled(true);
+    };
   }, []);
 
-  return { logout, error, isPending };
+  return { login, error, isPending };
 };

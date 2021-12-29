@@ -17,3 +17,10 @@
   color: #777;
   width: 100%;
 }
+
+.login-form p {
+  margin-top: 10px;
+  color: crimson;
+  background-color: #e4e4e4;
+  max-width: fit-content;
+}

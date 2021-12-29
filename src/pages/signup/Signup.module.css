@@ -10,8 +10,6 @@
 .signup-form span {
   display: block;
   margin-bottom: 6px;
-  align-content: left;
-  justify-content: left;
 }
 .signup-form input {
   padding: 8px 6px;
