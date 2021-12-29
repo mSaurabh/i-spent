@@ -3,9 +3,16 @@ import firebase from "firebase";
 export enum AUTHDISPATCH {
   "LOGIN" = "LOGIN",
   "LOGOUT" = "LOGOUT",
+  "AUTH_IS_READY" = "AUTH_IS_READY",
 }
 
 export interface IAuthContextState {
   user: firebase.User | null;
-  dispatch: React.Dispatch<any>;
+  authIsReady: boolean;
+  dispatch: React.Dispatch<IDispatchType>;
+}
+
+export interface IDispatchType {
+  type: string;
+  payload?: any;
 }
