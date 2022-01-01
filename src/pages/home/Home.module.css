@@ -1,9 +1,7 @@
 .container {
   display: grid;
-  /* so left column takes 66 % and right column takes 33% width */
   grid-template-columns: 2fr 1fr;
   max-width: 960px;
-  /* auto centralizes the page*/
   margin: 60px auto;
 }
 .content {
@@ -55,4 +53,98 @@
 }
 .sidebar aside li {
   margin: 10px;
+}
+
+/* transactions */
+.transactions li {
+  margin: 30px auto;
+  border: 1px solid #f2f2f2;
+  box-shadow: 3px 3px 5px rgba(50, 50, 50, 0.1);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-left: 6px solid #1f9751;
+}
+.transactions .name {
+  color: #777;
+  font-size: 1.4em;
+}
+.transactions .amount {
+  margin-left: auto;
+  margin-right: 40px;
+  color: #777;
+  font-weight: bold;
+  font-size: 1.6em;
+}
+.transactions button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ddd;
+  color: #777;
+  border: none;
+  padding: 12px 8px;
+  text-align: center;
+  line-height: 0;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+button .delete {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  filter: invert(60%);
+}
+
+/* deleted-transactions */
+.deleted-transactions {
+  max-width: 960px;
+  justify-items: center;
+  margin: 10px auto;
+}
+.deleted-transactions li {
+  margin: 30px auto;
+  /* max-width: 30px auto; */
+  border: 1px solid #f2f2f2;
+  box-shadow: 3px 3px 5px rgba(50, 50, 50, 0.1);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  border-left: 6px solid #e63636;
+}
+.deleted-transactions .name {
+  color: #777;
+  font-size: 1.4em;
+}
+.deleted-transactions .amount {
+  margin-left: auto;
+  margin-right: 40px;
+  color: #777;
+  font-weight: bold;
+  font-size: 1.6em;
+}
+.deleted-transactions button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #ddd;
+  color: #777;
+  border: none;
+  padding: 12px 8px;
+  text-align: center;
+  line-height: 0;
+  font-size: 0.9em;
+  cursor: pointer;
+}
+
+.restore {
+  position: absolute;
+  top: 0;
+  left: 0;
 }

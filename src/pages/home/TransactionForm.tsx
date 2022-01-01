@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FCOLL } from "../../firebase/firebase.props";
 import { useFirestore } from "../../hooks/useFirestore";
-
 interface TransactionFormProps {
   uid: string;
 }
@@ -9,7 +9,7 @@ interface TransactionFormProps {
 export const TransactionForm = (props: TransactionFormProps) => {
   // props
   const { uid } = props;
-
+  const navigate = useNavigate();
   // states
   const [name, setName] = useState("");
   const [amount, setAmount] = useState("");

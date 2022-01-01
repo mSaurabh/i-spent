@@ -14,7 +14,7 @@ const Signup = (props: ISignupProps) => {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log(displayName, email, password);
+    //console.log(displayName, email, password);
     signup(email, password, displayName);
     navigate("/");
   };

@@ -17,6 +17,8 @@ let initialState: IFirestoreHookState = {
 };
 
 const firestoreReducer = (state: any, action: any) => {
+  //NOTE Notice how there is no break in the switch case,
+  //     that's cause we are using return and hence break is not needed.
   switch (action.type) {
     case FIREACT.IS_PENDING:
       // explicitly resetting the state
@@ -30,6 +32,15 @@ const firestoreReducer = (state: any, action: any) => {
         success: true,
         error: null,
       };
+    case FIREACT.SOFT_DELETED_DOCUMENT:
+      return {
+        isPending: false,
+        document: null,
+        success: true,
+        error: null,
+      };
+    case FIREACT.RESTORE_DOCUMENT:
+      return { isPending: false, document: null, success: true, error: null };
     case FIREACT.ERROR:
       return {
         isPending: false,
@@ -77,8 +88,41 @@ export const useFirestore = (cName: FCOLL) => {
     }
   };
 
-  // delete document
+  // soft delete document
   const deleteDocument = async (id: string) => {
+    dispatch({ type: "IS_PENDING" });
+    try {
+      const deletedDocument = await ref.doc(id).update({ isDeleted: true });
+      dispatchIfNotCancelled({
+        type: FIREACT.SOFT_DELETED_DOCUMENT,
+      });
+    } catch (error: any) {
+      console.log(error);
+      dispatchIfNotCancelled({
+        type: FIREACT.ERROR,
+        payload: "Could not delete document",
+      });
+    }
+  };
+
+  // restore document
+  const restoreDocument = async (id: string) => {
+    dispatch({ type: "IS_PENDING" });
+    try {
+      const deletedDocument = await ref.doc(id).update({ isDeleted: false });
+      dispatchIfNotCancelled({
+        type: FIREACT.RESTORE_DOCUMENT,
+      });
+    } catch (error: any) {
+      console.log(error);
+      dispatchIfNotCancelled({
+        type: FIREACT.ERROR,
+        payload: "Could not restore document",
+      });
+    }
+  };
+
+  const hardDelete = async (id: string) => {
     await ref.doc(id).delete();
   };
 
@@ -87,5 +131,5 @@ export const useFirestore = (cName: FCOLL) => {
     return () => setIsCancelled(true);
   }, []);
 
-  return { addDocument, deleteDocument, response };
+  return { addDocument, deleteDocument, hardDelete, restoreDocument, response };
 };

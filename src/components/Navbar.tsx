@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
+import Restore from "../assets/restore.svg";
+// components
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogout";
+// styles
 import styles from "./Navbar.module.css";
 
 interface INavBarProps {}
@@ -32,6 +35,23 @@ export const Navbar = (props: INavBarProps) => {
               <button className="btn" onClick={logout}>
                 Logout
               </button>
+            </li>
+            <li>
+              <Link to="/deleted-transactions">
+                <img
+                  width={35}
+                  height={35}
+                  alt="Delete this recipe"
+                  src={Restore}
+                  className="restore"
+                  style={{
+                    marginTop: 15,
+                    backgroundColor: "#555",
+                    borderRadius: 5,
+                    filter: "invert(60)",
+                  }}
+                />
+              </Link>
             </li>
           </>
         )}
