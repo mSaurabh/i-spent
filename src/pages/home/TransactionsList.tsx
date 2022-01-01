@@ -7,7 +7,7 @@ interface TransactionListProps {
   transactions: any[];
 }
 
-const TransactionList = (props: TransactionListProps) => {
+export const TransactionList = (props: TransactionListProps) => {
   const { transactions }: { transactions: ITransactions[] } = props;
   const { deleteDocument, response } = useFirestore(FCOLL.TRANSACTIONS);
   //console.log(response);
@@ -23,5 +23,3 @@ const TransactionList = (props: TransactionListProps) => {
     </ul>
   );
 };
-
-export default TransactionList;

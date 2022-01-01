@@ -23,6 +23,7 @@ const Login = (props: ILoginProps) => {
   };
   useEffect(() => {
     setEnv(process.env.NODE_ENV.toUpperCase());
+    console.log("Environment is ", env);
   }, []);
 
   const handleCaptcha = () => {
@@ -58,13 +59,7 @@ const Login = (props: ILoginProps) => {
       <ReCAPTCHA
         //@ts-ignore
         ref={captchaRef}
-        sitekey={
-          env
-            ? env === "PRODUCTION"
-              ? CAPTCHA.PRODUCTION
-              : CAPTCHA.DEVELOPMENT
-            : CAPTCHA.DEVELOPMENT
-        }
+        sitekey={!env ? CAPTCHA.PRODUCTION : CAPTCHA.DEVELOPMENT}
         onChange={handleCaptcha}
       />
       <button className="btn" disabled={isPending}>

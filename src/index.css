@@ -19,6 +19,16 @@ h4 {
 ul {
   list-style-type: none;
 }
+.total {
+  color: #1f9751;
+  border: 1px solid #f2f2f2;
+  background-color: #f2f2f2;
+  display: flex;
+  box-shadow: 3px 3px 5px rgb(50 50 50 / 10%);
+  padding: 20px;
+  align-items: center;
+  overflow: hidden;
+}
 .btn {
   background: none;
   border: 2px solid #1f9751;
