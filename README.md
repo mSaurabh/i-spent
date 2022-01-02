@@ -6,6 +6,7 @@
 ## Created using the following technologies
 
 - React
+- CSS
 - Typescript
 - Firebase/Firestore
 
