@@ -14,13 +14,17 @@ const useSignup = () => {
   const signup = async (
     email: string,
     password: string,
-    displayName: string
+    displayName: string,
+    captcha: string
   ) => {
     setIsPending(true);
     setError("");
 
     try {
       if (email && password && displayName) {
+        if (!captcha) {
+          throw Error("Please Check the Captcha");
+        }
         // signup user
         const res = await projectAuth.createUserWithEmailAndPassword(
           email,
